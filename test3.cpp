@@ -3,7 +3,6 @@
 //#include <string.h>
 //#include <stdlib.h>
 //
-//// 첫번째 역 찾기 불확실하게 됨.
 //struct SUBWAY
 //{
 //    char list[100];
@@ -31,8 +30,8 @@
 //void Plus_subway(char fname[]);
 //void Search_list(char firstList[], char secondList[]);
 //int Transfer(char firstList[], char secondList[], int c3, int transCount, int deter);
-//int First_Search_way0(char firstList[], int firstSearchCount, int fsDeter);
-//int First_Search_way1(char firstList[], int firstSearchCount, int fsDeter);
+//void First_Search_way(char firstList[]);
+//int First_Search_Trans(char firstList[], int firstSearchCount, int fsDeter);
 //
 //struct SUBWAY* ptr = NULL;
 //struct SUBWAY* prev;
@@ -68,6 +67,8 @@
 //    Plus_subway(fname);
 //    strcpy(fname, "five2.txt");
 //    Plus_subway(fname);
+//    strcpy(fname, "five1.txt");
+//    Plus_subway(fname);
 //    strcpy(fname, "nine2.txt");
 //    Plus_subway(fname);
 //    strcpy(fname, "six2.txt");
@@ -82,32 +83,21 @@
 //    Plus_subway(fname);
 //    strcpy(fname, "seven2.txt");
 //    Plus_subway(fname);
+//    strcpy(fname, "airport.txt");
+//    Plus_subway(fname);
 //    printf("\n\n");
 //    ptr = head->way[0];
 //    printf("START: ");
 //    gets_s(firstList, sizeof(firstList));
 //    printf("END: ");
 //    gets_s(secondList, sizeof(secondList));
-//    int searchCount = 0;
-//    int firstSearchCount = 0;
-//    int fsDeter = 1000, fsC = 0;
-//    int start = First_Search_way0(firstList, firstSearchCount, fsDeter);
-//    if (start)
-//        printf("Start station way[0]: %s\n\n", ptr->list);
+//    First_Search_way(firstList);
+//    if (strcmp(ptr->list, firstList) == 0)
+//        printf("First Search Success\n\n");
 //    else
-//    {
-//        printf("First_Search failed way[0]: %s\n\n", ptr->list);
-//        fsC = 0;
-//        fsDeter = 2000;
-//        ptr = head->way[0];
-//        start = First_Search_way1(firstList, firstSearchCount, fsDeter);
-//        if (start)
-//            printf("Start station way[1]: %s\n\n", ptr->list);
-//        else
-//            printf("First_Search failed way[1]: %s\n\n", ptr->list);
-//    }
+//        printf("First Search Failed: %s\n\n", ptr->list);
 //    Search_list(firstList, secondList);
-//
+//    printf("\n\n");
 //}
 //
 ////Construct subwaylist
@@ -280,7 +270,7 @@
 //    pfile = fopen(fname, "r");
 //    if (strcmp(fname, "one2.txt") == 0)
 //        transNumber = 1;
-//    else if (strcmp(fname, "five2.txt") == 0)
+//    else if (strcmp(fname, "five2.txt") == 0 || strcmp(fname, "five1.txt") == 0)
 //        transNumber = 5;
 //    else if (strcmp(fname, "three2.txt") == 0)
 //        transNumber = 3;
@@ -296,6 +286,8 @@
 //        transNumber = 9;
 //    else if (strcmp(fname, "six2.txt") == 0)
 //        transNumber = 6;
+//    else if (strcmp(fname, "airport.txt") == 0)
+//        transNumber = 12;
 //    while (fscanf(pfile, "%s", &word[i]) == 1)
 //    {
 //        struct SUBWAY* node;
@@ -427,9 +419,9 @@
 //                            tfTemp1 = ptr;
 //                            for (int tf1 = 0; tf1 < 2; tf1++)
 //                            {
-//                                if (ptr->way[0] && ptr->way[0]->changeCount != deter)
+//                                if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4 && ptr->way[0]->changeCount != deter - 5 && ptr->way[0]->changeCount != deter - 6)
 //                                    ptr = ptr->way[0];
-//                                else if (ptr->way[1] && ptr->way[1]->changeCount != deter)
+//                                else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4 && ptr->way[1]->changeCount != deter - 5 && ptr->way[1]->changeCount != deter - 6)
 //                                    ptr = ptr->way[1];
 //                                else
 //                                    break;
@@ -460,7 +452,7 @@
 //            }
 //            ptr = tfTemp0;
 //        }
-//        if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4)
+//        if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4 && ptr->way[0]->changeCount != deter - 5 && ptr->way[0]->changeCount != deter - 6)
 //            ptr = ptr->way[0];
 //        else
 //        {
@@ -497,9 +489,9 @@
 //                            tfTemp2 = ptr;
 //                            for (int tf1 = 0; tf1 < 2; tf1++)
 //                            {
-//                                if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4)
+//                                if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4 && ptr->way[0]->changeCount != deter - 5 && ptr->way[0]->changeCount != deter - 6)
 //                                    ptr = ptr->way[0];
-//                                else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4)
+//                                else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4 && ptr->way[1]->changeCount != deter - 5 && ptr->way[1]->changeCount != deter - 6)
 //                                    ptr = ptr->way[1];
 //                                else
 //                                    break;
@@ -530,7 +522,7 @@
 //            }
 //            ptr = tfTemp0;
 //        }
-//        if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4)
+//        if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4 && ptr->way[1]->changeCount != deter - 5 && ptr->way[1]->changeCount != deter - 6)
 //            ptr = ptr->way[1];
 //        else
 //        {
@@ -592,16 +584,11 @@
 //
 //int Transfer(char firstList[], char secondList[], int c3, int transCount, int deter)
 //{
-//    int tfChange = 0;
-//    int tfC3;
-//    int tempSubwayChange;
 //    struct SUBWAY* tfTemp3;
 //    struct SUBWAY* tfTemp0_3;
 //    c3++;
 //    while (ptr)
 //    {
-//        if (global_cCount > 50)
-//            break;
 //        strcpy(subwayList[global_cCount][c3], ptr->list);
 //        ptr->changeCount = deter;
 //        if (strcmp(ptr->list, secondList) == 0)
@@ -625,9 +612,9 @@
 //                            tfTemp3 = ptr;
 //                            for (int tf3 = 0; tf3 < 2; tf3++)
 //                            {
-//                                if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4)
+//                                if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4 && ptr->way[0]->changeCount != deter - 5 && ptr->way[0]->changeCount != deter - 6)
 //                                    ptr = ptr->way[0];
-//                                else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4)
+//                                else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4 && ptr->way[1]->changeCount != deter - 5 && ptr->way[1]->changeCount != deter - 6)
 //                                    ptr = ptr->way[1];
 //                                else
 //                                    break;
@@ -658,9 +645,9 @@
 //            }
 //            ptr = tfTemp0_3;
 //        }
-//        if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4)
+//        if (ptr->way[0] && ptr->way[0]->changeCount != deter && ptr->way[0]->changeCount != deter - 1 && ptr->way[0]->changeCount != deter - 2 && ptr->way[0]->changeCount != deter - 3 && ptr->way[0]->changeCount != deter - 4 && ptr->way[0]->changeCount != deter - 5 && ptr->way[0]->changeCount != deter - 6)
 //            ptr = ptr->way[0];
-//        else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4)
+//        else if (ptr->way[1] && ptr->way[1]->changeCount != deter && ptr->way[1]->changeCount != deter - 1 && ptr->way[1]->changeCount != deter - 2 && ptr->way[1]->changeCount != deter - 3 && ptr->way[1]->changeCount != deter - 4 && ptr->way[1]->changeCount != deter - 5 && ptr->way[1]->changeCount != deter - 6)
 //            ptr = ptr->way[1];
 //        else
 //            return 0;
@@ -668,17 +655,18 @@
 //    }
 //}
 //
-//int First_Search_way0(char firstList[], int firstSearchCount, int fsDeter)
+//void First_Search_way(char firstList[])
 //{
 //    struct SUBWAY* tfTempFs;
 //    struct SUBWAY* tfTempFs1;
 //    struct SUBWAY* tfTemp;
+//    int fsDeter = 1000, firstSearchCount = 0;
 //    tfTemp = ptr;
 //    while (ptr)
 //    {
 //        ptr->changeCount = fsDeter;
 //        if (strcmp(ptr->list, firstList) == 0)
-//            return 1;
+//            return;
 //        if (ptr->change != 0 && firstSearchCount < 7)
 //        {
 //            tfTempFs = ptr;
@@ -691,26 +679,26 @@
 //                        if (transSearchList[i].transLine[j] != ptr->transNum && transSearchList[i].transLine[j] != 0)
 //                        {
 //                            ptr = transSearchList[i].transWay[j];
-//                            ptr->changeCount = fsDeter + 1;
+//                            //ptr->changeCount = fsDeter + 1;
 //                            tfTempFs1 = ptr;
 //                            for (int tf1 = 0; tf1 < 2; tf1++)
 //                            {
-//                                if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4)
+//                                if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4 && ptr->way[0]->changeCount != fsDeter - 5 && ptr->way[0]->changeCount != fsDeter - 6)
 //                                    ptr = ptr->way[0];
-//                                else if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4)
+//                                else if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4 && ptr->way[1]->changeCount != fsDeter - 5 && ptr->way[1]->changeCount != fsDeter - 6)
 //                                    ptr = ptr->way[1];
 //                                else
 //                                    break;
 //                                int tfFirstDeter = fsDeter + 1;
 //                                firstSearchCount++;
-//                                int firstTransfer = First_Search_way0(firstList, firstSearchCount, tfFirstDeter);
+//                                int firstTransfer = First_Search_Trans(firstList, firstSearchCount, tfFirstDeter);
 //                                if (firstTransfer == 0)
 //                                {
 //                                    ptr = tfTempFs1;
 //                                }
 //                                else if (firstTransfer == 1)
 //                                {
-//                                    return 1;
+//                                    return;
 //                                }
 //                            }
 //                        }
@@ -719,14 +707,67 @@
 //            }
 //            ptr = tfTempFs;
 //        }
-//        if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4)
+//        if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4 && ptr->way[0]->changeCount != fsDeter - 5 && ptr->way[0]->changeCount != fsDeter - 6)
 //            ptr = ptr->way[0];
 //        else
-//            return 0;
+//            break;
+//    }
+//    ptr = tfTemp;
+//    firstSearchCount = 0;
+//    fsDeter = 2000;
+//    while (ptr)
+//    {
+//        ptr->changeCount = fsDeter;
+//        if (strcmp(ptr->list, firstList) == 0)
+//            return;
+//        if (ptr->change != 0 && firstSearchCount < 7)
+//        {
+//            tfTempFs = ptr;
+//            for (int i = 0; i < 100; i++)
+//            {
+//                if (strcmp(transSearchList[i].list, ptr->list) == 0)
+//                {
+//                    for (int j = 0; j < 6; j++)
+//                    {
+//                        if (transSearchList[i].transLine[j] != ptr->transNum && transSearchList[i].transLine[j] != 0)
+//                        {
+//                            ptr = transSearchList[i].transWay[j];
+//                            //ptr->changeCount = fsDeter + 1;
+//                            tfTempFs1 = ptr;
+//                            for (int tf1 = 0; tf1 < 2; tf1++)
+//                            {
+//                                if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4 && ptr->way[0]->changeCount != fsDeter - 5 && ptr->way[0]->changeCount != fsDeter - 6)
+//                                    ptr = ptr->way[0];
+//                                else if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4 && ptr->way[1]->changeCount != fsDeter - 5 && ptr->way[1]->changeCount != fsDeter - 6)
+//                                    ptr = ptr->way[1];
+//                                else
+//                                    break;
+//                                int tfFirstDeter = fsDeter + 1;
+//                                firstSearchCount++;
+//                                int firstTransfer = First_Search_Trans(firstList, firstSearchCount, tfFirstDeter);
+//                                if (firstTransfer == 0)
+//                                {
+//                                    ptr = tfTempFs1;
+//                                }
+//                                else if (firstTransfer == 1)
+//                                {
+//                                    return;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            ptr = tfTempFs;
+//        }
+//        if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4 && ptr->way[1]->changeCount != fsDeter - 5 && ptr->way[1]->changeCount != fsDeter - 6)
+//            ptr = ptr->way[1];
+//        else
+//            return;
 //    }
 //}
 //
-//int First_Search_way1(char firstList[], int firstSearchCount, int fsDeter)
+//int First_Search_Trans(char firstList[], int firstSearchCount, int fsDeter)
 //{
 //    struct SUBWAY* tfTempFs;
 //    struct SUBWAY* tfTempFs1;
@@ -749,19 +790,19 @@
 //                        if (transSearchList[i].transLine[j] != ptr->transNum && transSearchList[i].transLine[j] != 0)
 //                        {
 //                            ptr = transSearchList[i].transWay[j];
-//                            ptr->changeCount = fsDeter + 1;
+//                            //ptr->changeCount = fsDeter + 1;
 //                            tfTempFs1 = ptr;
 //                            for (int tf1 = 0; tf1 < 2; tf1++)
 //                            {
-//                                if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4)
+//                                if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4 && ptr->way[0]->changeCount != fsDeter - 5 && ptr->way[0]->changeCount != fsDeter - 6)
 //                                    ptr = ptr->way[0];
-//                                else if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4)
+//                                else if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4 && ptr->way[1]->changeCount != fsDeter - 5 && ptr->way[1]->changeCount != fsDeter - 6)
 //                                    ptr = ptr->way[1];
 //                                else
 //                                    break;
 //                                int tfFirstDeter = fsDeter + 1;
 //                                firstSearchCount++;
-//                                int firstTransfer = First_Search_way1(firstList, firstSearchCount, tfFirstDeter);
+//                                int firstTransfer = First_Search_Trans(firstList, firstSearchCount, tfFirstDeter);
 //                                if (firstTransfer == 0)
 //                                {
 //                                    ptr = tfTempFs1;
@@ -777,7 +818,9 @@
 //            }
 //            ptr = tfTempFs;
 //        }
-//        if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4)
+//        if (ptr->way[0] && ptr->way[0]->changeCount != fsDeter && ptr->way[0]->changeCount != fsDeter - 1 && ptr->way[0]->changeCount != fsDeter - 2 && ptr->way[0]->changeCount != fsDeter - 3 && ptr->way[0]->changeCount != fsDeter - 4 && ptr->way[0]->changeCount != fsDeter - 5 && ptr->way[0]->changeCount != fsDeter - 6)
+//            ptr = ptr->way[0];
+//        else if (ptr->way[1] && ptr->way[1]->changeCount != fsDeter && ptr->way[1]->changeCount != fsDeter - 1 && ptr->way[1]->changeCount != fsDeter - 2 && ptr->way[1]->changeCount != fsDeter - 3 && ptr->way[1]->changeCount != fsDeter - 4 && ptr->way[1]->changeCount != fsDeter - 5 && ptr->way[1]->changeCount != fsDeter - 6)
 //            ptr = ptr->way[1];
 //        else
 //            return 0;
